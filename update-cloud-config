@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+bosh update cloud-config cloud-config.yml

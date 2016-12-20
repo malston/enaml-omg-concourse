@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+LOG_LEVEL=debug ./omg deploy-product --bosh-url https://10.0.0.31 \
+--bosh-port 25555 \
+--bosh-user director \
+--bosh-pass "VnJkGvTwmoTAmADx-IfhI5nk1CDuIiOp" \
+--ssl-ignore \
+--print-manifest \
+concourse-plugin \
+--web-vm-type small \
+--web-ip 10.0.0.21 \
+--external-url http://10.0.0.21:8080 \
+--worker-vm-type small \
+--database-vm-type 2xlarge.disk \
+--network-name vms \
+--concourse-username concourse \
+--concourse-password concourse \
+--concourse-db-pwd secret \
+--concourse-release-url "http://bosh.io/d/github.com/concourse/concourse?v=2.5.1" \
+--concourse-release-sha "d0cbc2f4c38b482c579c9237b972e49a544c1561" \
+--concourse-release-ver "2.5.1" \
+--az az1 \
+--database-storage-type 204800 \
+--worker-instance-count 2
+
+# expected argument for flag `--size-in-megabytes', but got option `-4276'
+
+# IMAGE_SIZE=$(($(df -m /var/vcap/data | tail -n1 | awk '{print $2}') - 10 * 1024))
