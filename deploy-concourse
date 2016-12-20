@@ -10,7 +10,7 @@ concourse-plugin \
 --web-vm-type small \
 --web-ip 10.0.0.21 \
 --external-url http://10.0.0.21:8080 \
---worker-vm-type small \
+--worker-vm-type medium.disk \
 --database-vm-type 2xlarge.disk \
 --network-name vms \
 --concourse-username concourse \
