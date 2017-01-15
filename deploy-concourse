@@ -5,14 +5,13 @@ LOG_LEVEL=debug ./omg deploy-product --bosh-url https://10.0.0.31 \
 --bosh-user director \
 --bosh-pass "z11lD_i_2REndO63On1prelq1jTUBvUr" \
 --ssl-ignore \
-# --print-manifest \
 concourse-plugin \
 --web-vm-type small \
 --web-ip 10.0.0.21 \
 --external-url http://10.0.0.21:8080 \
 --worker-vm-type medium.disk \
 --database-vm-type 2xlarge.disk \
---network-name vms \
+--network-name default \
 --concourse-username concourse \
 --concourse-password concourse \
 --concourse-db-pwd secret \
