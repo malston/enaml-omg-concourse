@@ -3,7 +3,7 @@
 LOG_LEVEL=debug ./omg deploy-product --bosh-url https://10.0.0.31 \
 --bosh-port 25555 \
 --bosh-user director \
---bosh-pass "VnJkGvTwmoTAmADx-IfhI5nk1CDuIiOp" \
+--bosh-pass "z11lD_i_2REndO63On1prelq1jTUBvUr" \
 --ssl-ignore \
 # --print-manifest \
 concourse-plugin \
@@ -19,7 +19,7 @@ concourse-plugin \
 --concourse-release-url "http://bosh.io/d/github.com/concourse/concourse?v=2.5.1" \
 --concourse-release-sha "d0cbc2f4c38b482c579c9237b972e49a544c1561" \
 --concourse-release-ver "2.5.1" \
---az az1 \
+--az home \
 --database-storage-type 204800 \
 --worker-instance-count 2
 

@@ -65,6 +65,7 @@ instance_groups:
         allow_host_access: true
         listen_address: 0.0.0.0:7777
         listen_network: tcp
+        btrfs_store_size_mb: 28672
 update:
   canaries: 1
   max_in_flight: 3
