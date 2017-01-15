@@ -1,5 +1,5 @@
 name: concourse
-director_uuid: 0668afe2-e3b0-4483-b8bf-df38a6ef3a4a
+director_uuid: 6328ea09-4b91-4d97-a374-a8d2fcbd45be
 releases:
 - name: concourse
   version: 2.5.1
