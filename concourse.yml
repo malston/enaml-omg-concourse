@@ -1,10 +1,11 @@
+---
 name: concourse
 director_uuid: 6328ea09-4b91-4d97-a374-a8d2fcbd45be
 releases:
 - name: concourse
-  version: 2.5.1
-  url: http://bosh.io/d/github.com/concourse/concourse?v=2.5.1
-  sha1: d0cbc2f4c38b482c579c9237b972e49a544c1561
+  version: 2.6.0
+  url: http://bosh.io/d/github.com/concourse/concourse?v=2.6.0
+  sha1: 6e4c1321768df37a0e3947f59d28ddf8804bd4c0
 - name: garden-runc
   version: 1.0.4
   url: http://bosh.io/d/github.com/cloudfoundry/garden-runc-release?v=1.0.4
@@ -18,8 +19,12 @@ instance_groups:
   instances: 1
   vm_type: small
   stemcell: trusty
-  azs: [az1]
-  networks: [{name: vms, static_ips: [10.0.0.21]}]
+  azs:
+  - home
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.0.21
   jobs:
   - name: atc
     release: concourse
@@ -32,12 +37,14 @@ instance_groups:
     release: concourse
     properties: {}
 - name: db
-  persistent_disk_type: "204800"
+  persistent_disk_type: '204800'
   instances: 1
   vm_type: 2xlarge.disk
   stemcell: trusty
-  azs: [az1]
-  networks: [{name: vms}]
+  azs:
+  - home
+  networks:
+  - name: default
   jobs:
   - name: postgresql
     release: concourse
@@ -47,10 +54,12 @@ instance_groups:
         role: atc
 - name: worker
   instances: 2
-  vm_type: medium.disk
+  vm_type: xlarge.disk
   stemcell: trusty
-  azs: [az1]
-  networks: [{name: vms}]
+  azs:
+  - home
+  networks:
+  - name: default
   jobs:
   - name: groundcrew
     release: concourse
@@ -65,7 +74,7 @@ instance_groups:
         allow_host_access: true
         listen_address: 0.0.0.0:7777
         listen_network: tcp
-        btrfs_store_size_mb: 28672
+        btrfs_store_size_mb: 114688
 update:
   canaries: 1
   max_in_flight: 3
