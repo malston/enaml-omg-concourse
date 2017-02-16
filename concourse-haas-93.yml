@@ -1,0 +1,85 @@
+---
+name: concourse
+director_uuid: 9a901910-5014-4a88-a9e5-0b7bc3b7983e
+releases:
+- name: concourse
+  version: 2.7.0
+  url: http://bosh.io/d/github.com/concourse/concourse?v=2.7.0
+  sha1: 826932f631d0941b3e4cc9cb19e0017c7f989b56
+- name: garden-runc
+  version: 1.0.4
+  url: http://bosh.io/d/github.com/cloudfoundry/garden-runc-release?v=1.0.4
+  sha1: ef218cc8cc2ea5a874a59becabdf957e52976939
+stemcells:
+- alias: trusty
+  os: ubuntu-trusty
+  version: latest
+instance_groups:
+- name: web
+  instances: 1
+  vm_type: small
+  stemcell: trusty
+  azs:
+  - env1
+  networks:
+  - name: VMNetwork
+    default:
+    - dns
+    - gateway
+    static_ips:
+    - 10.193.98.201
+  jobs:
+  - name: atc
+    release: concourse
+    properties:
+      basic_auth_password: concourse
+      basic_auth_username: concourse
+      external_url: http://10.193.98.201:8080
+      postgresql_database: atc
+  - name: tsa
+    release: concourse
+    properties: {}
+- name: db
+  persistent_disk_type: '204800'
+  instances: 1
+  vm_type: 2xlarge.disk
+  stemcell: trusty
+  azs:
+  - env1
+  networks:
+  - name: VMNetwork
+  jobs:
+  - name: postgresql
+    release: concourse
+    properties:
+      databases:
+      - name: atc
+        role: atc
+- name: worker
+  instances: 2
+  vm_type: xlarge.disk
+  stemcell: trusty
+  azs:
+  - env1
+  networks:
+  - name: VMNetwork
+  jobs:
+  - name: groundcrew
+    release: concourse
+    properties: {}
+  - name: baggageclaim
+    release: concourse
+    properties: {}
+  - name: garden
+    release: garden-runc
+    properties:
+      garden:
+        allow_host_access: true
+        listen_address: 0.0.0.0:7777
+        listen_network: tcp
+        btrfs_store_size_mb: 114688
+update:
+  canaries: 1
+  max_in_flight: 3
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
