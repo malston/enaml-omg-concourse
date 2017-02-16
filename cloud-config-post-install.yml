@@ -1,31 +1,28 @@
 ---
 azs:
-- name: az1
+- name: home
   cloud_properties:
     datacenters:
-    - name: az1
+    - name: home
       clusters:
       - Cluster:
-          resource_pool:
+          resource_pool: home
 networks:
-- name: vms
+- name: default
   type: manual
   subnets:
   - dns:
     - 8.8.8.8
-    - 8.8.4.4
     range: 10.0.0.0/24
     gateway: 10.0.0.1
     azs:
-    - az1
+    - home
     cloud_properties:
-      name: VM Network
+      name: home
     reserved:
-    - 10.0.0.2-10.0.0.20
-    - 10.0.0.30-10.0.0.31
-    - 10.0.0.108-10.0.0.254
+    - 10.0.0.2-10.0.0.31
+    - 10.0.0.80-10.0.0.254
     static:
-    - 10.0.0.21
     - 10.0.0.36
     - 10.0.0.37
     - 10.0.0.38
@@ -36,17 +33,6 @@ networks:
     - 10.0.0.45
     - 10.0.0.46
     - 10.0.0.50
-    - 10.0.0.80
-    - 10.0.0.81
-    - 10.0.0.82
-    - 10.0.0.83
-    - 10.0.0.84
-    - 10.0.0.85
-    - 10.0.0.86
-    - 10.0.0.98
-    - 10.0.0.99
-    - 10.0.0.100
-    - 10.0.0.101
 vm_types:
 - name: nano
   cloud_properties:
@@ -232,11 +218,14 @@ disk_types:
     type: thin
 compilation:
   workers: 4
-  network: vms
-  az: az1
+  network: default
+  az: home
   reuse_compilation_vms: true
   vm_type: large.cpu
   vm_extensions: []
+  env:
+    bosh:
+      password: "$6$edeb275de1995b28$jS2vjvdS3Lp0vviEIxa/PCT9qGiXu1CjGF1OXCHIZSX8sicDeDZv60LHaN0kPiWOQ2SQAhQivWpLKiC6HCBDe."
 vm_extensions:
 - name: public_ip
   cloud_properties: {}
